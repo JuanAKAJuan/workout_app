@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/auth/login_or_register.dart';
+import 'package:workout_app/themes/dark_mode.dart';
+import 'package:workout_app/themes/light_mode.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,19 +10,13 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: '1 Ton',
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        // colorScheme: ColorScheme.fromSeed(
-        // seedColor: Colors.red,
-        // ),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: '1 Ton'),
+      home: LoginOrRegister(),
+      theme: lightMode,
     );
   }
 }

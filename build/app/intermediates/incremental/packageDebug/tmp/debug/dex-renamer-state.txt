@@ -1,0 +1,7 @@
+#Tue Mar 05 01:01:16 EST 2024
+base.0=/home/juanix/Dev/workout_app/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+base.1=/home/juanix/Dev/workout_app/build/app/intermediates/dex/debug/mergeDexDebug/classes2.dex
+path.0=classes.dex
+path.1=classes2.dex
+renamed.0=classes.dex
+renamed.1=classes2.dex

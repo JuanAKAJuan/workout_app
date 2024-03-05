@@ -1,0 +1,1 @@
+ /home/juanix/Dev/workout_app/.dart_tool/flutter_build/e3ff622423e60f00bc65e08e4156ebc8/native_assets.yaml: 

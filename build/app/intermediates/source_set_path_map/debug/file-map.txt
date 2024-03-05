@@ -1,0 +1,13 @@
+com.example.workout_app-core-1.6.0-0 /home/juanix/.gradle/caches/transforms-3/2b117b00aa16c9cd93e1792b1693f85c/transformed/core-1.6.0/res
+com.example.workout_app-jetified-annotation-experimental-1.1.0-1 /home/juanix/.gradle/caches/transforms-3/8041e0a499583b21d786252c4cd4f769/transformed/jetified-annotation-experimental-1.1.0/res
+com.example.workout_app-jetified-window-java-1.0.0-beta04-2 /home/juanix/.gradle/caches/transforms-3/cf7e3747fbf77e990d3483e4b1c76d82/transformed/jetified-window-java-1.0.0-beta04/res
+com.example.workout_app-jetified-window-1.0.0-beta04-3 /home/juanix/.gradle/caches/transforms-3/d4e3f23ac32d7c279c44c3660cf9264f/transformed/jetified-window-1.0.0-beta04/res
+com.example.workout_app-debug-4 /home/juanix/Dev/workout_app/android/app/src/debug/res
+com.example.workout_app-main-5 /home/juanix/Dev/workout_app/android/app/src/main/res
+com.example.workout_app-RES-6 /home/juanix/Dev/workout_app/build/app/RES/processDebugGoogleServices
+com.example.workout_app-pngs-7 /home/juanix/Dev/workout_app/build/app/generated/res/pngs/debug
+com.example.workout_app-resValues-8 /home/juanix/Dev/workout_app/build/app/generated/res/resValues/debug
+com.example.workout_app-rs-9 /home/juanix/Dev/workout_app/build/app/generated/res/rs/debug
+com.example.workout_app-mergeDebugResources-10 /home/juanix/Dev/workout_app/build/app/intermediates/incremental/debug/mergeDebugResources/merged.dir
+com.example.workout_app-mergeDebugResources-11 /home/juanix/Dev/workout_app/build/app/intermediates/incremental/debug/mergeDebugResources/stripped.dir
+com.example.workout_app-merged_res-12 /home/juanix/Dev/workout_app/build/app/intermediates/merged_res/debug
