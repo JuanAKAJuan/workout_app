@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/components/my_button.dart';
 import 'package:workout_app/components/my_textfield.dart';
+import 'package:workout_app/services/auth/auth_service.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -10,7 +11,23 @@ class LoginPage extends StatelessWidget {
 
   LoginPage({super.key, required this.onTap});
 
-  void login() {}
+  void login(BuildContext context) async {
+    final authService = AuthService();
+
+    try {
+      await authService.signInWithEmailPassword(
+        _emailController.text,
+        _passwordController.text,
+      );
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(e.toString()),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +43,14 @@ class LoginPage extends StatelessWidget {
               color: Theme.of(context).colorScheme.primary,
             ),
             const SizedBox(height: 40),
-            Text(
-              "Your wife might have left you, but your gains won't.",
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.primary,
-                fontSize: 16,
+            Padding(
+              padding: const EdgeInsets.only(left: 27),
+              child: Text(
+                "Your wife might have left you, but your gains won't.",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontSize: 16,
+                ),
               ),
             ),
             const SizedBox(height: 25),
@@ -48,7 +68,7 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 25),
             MyButton(
               text: "Login",
-              onTap: login,
+              onTap: () => login(context),
             ),
             const SizedBox(height: 25),
             Row(
