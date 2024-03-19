@@ -43,14 +43,12 @@ class LoginPage extends StatelessWidget {
               color: Theme.of(context).colorScheme.primary,
             ),
             const SizedBox(height: 40),
-            Padding(
-              padding: const EdgeInsets.only(left: 27),
-              child: Text(
-                "Your wife might have left you, but your gains won't.",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontSize: 16,
-                ),
+            Text(
+              "Your wife might have left you, but your gains won't.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Theme.of(context).colorScheme.primary,
+                fontSize: 16,
               ),
             ),
             const SizedBox(height: 25),

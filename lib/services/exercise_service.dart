@@ -4,22 +4,28 @@ import 'package:workout_app/models/exercise.dart';
 
 class ExercisesService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<void> addExercise(
-      String name, muscleGroup, typeOfExercise, intensityTechnique) {
+  Future<void> addExercise(String name, muscleGroup, intensityTechnique) {
     final String currentUserID = _auth.currentUser!.uid;
 
     Exercise newExercise = Exercise(
       name: name,
       muscleGroup: muscleGroup,
-      typeOfExercise: typeOfExercise,
       intensityTechnique: intensityTechnique,
     );
 
-    return FirebaseFirestore.instance
+    return _firestore
         .collection("Users")
         .doc(currentUserID)
         .collection("exercises")
         .add(newExercise.toMap());
+  }
+
+  Stream<QuerySnapshot> getExercises() {
+    return _firestore
+        .collection('Exercises')
+        .orderBy('name')
+        .snapshots();
   }
 }
