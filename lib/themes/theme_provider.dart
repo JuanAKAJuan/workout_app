@@ -3,7 +3,7 @@ import 'package:workout_app/themes/light_mode.dart';
 import 'package:flutter/material.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeData _themeData = lightMode;
+  ThemeData _themeData = darkMode;
 
   ThemeData get themeData => _themeData;
 
@@ -14,11 +14,11 @@ class ThemeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleTheme() {
-    if (_themeData == lightMode) {
-      themeData = darkMode;
-    } else {
+  Future<void> toggleTheme() async {
+    if (_themeData == darkMode) {
       themeData = lightMode;
+    } else {
+      themeData = darkMode;
     }
   }
 }
