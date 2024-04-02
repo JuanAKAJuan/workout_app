@@ -7,7 +7,7 @@ class LoginPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  void Function()? onTap;
+  final void Function()? onTap;
 
   LoginPage({super.key, required this.onTap});
 
@@ -20,12 +20,14 @@ class LoginPage extends StatelessWidget {
         _passwordController.text,
       );
     } catch (e) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(e.toString()),
-        ),
-      );
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(e.toString()),
+          ),
+        );
+      }
     }
   }
 
