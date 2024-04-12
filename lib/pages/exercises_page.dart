@@ -16,10 +16,7 @@ class ExercisesPage extends StatelessWidget {
         elevation: 0,
         actions: <Widget>[
           IconButton(
-            onPressed: () async {
-              await _exercisesService.addExercise(
-                  "Stair Calf Raises", "Calves", "None");
-            },
+            onPressed: () => showAddExerciseWindow(context),
             icon: const Icon(Icons.add),
           )
         ],
@@ -63,6 +60,61 @@ class ExercisesPage extends StatelessWidget {
           );
         }
         return const Center(child: Text("No Data"));
+      },
+    );
+  }
+
+  void showAddExerciseWindow(BuildContext context) {
+    TextEditingController nameController = TextEditingController();
+    TextEditingController muscleGroupController = TextEditingController();
+    TextEditingController intensityTechniqueController =
+        TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add New Exercise'),
+          actionsAlignment: MainAxisAlignment.center,
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter exercise name',
+                  ),
+                ),
+                TextField(
+                  controller: muscleGroupController,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter muscle group',
+                  ),
+                ),
+                TextField(
+                  controller: intensityTechniqueController,
+                  maxLines: null,
+                  decoration: const InputDecoration(
+                    hintText: 'Enter intensity technique\n(leave empty if there isn\'t one)',
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Save'),
+              onPressed: () {
+                _exercisesService.addExercise(nameController.text, muscleGroupController.text, intensityTechniqueController.text);
+                Navigator.of(context).pop();
+              }
+            ),
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ],
+        );
       },
     );
   }
