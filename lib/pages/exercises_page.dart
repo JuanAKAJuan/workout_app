@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_app/services/exercise_service.dart';
 
@@ -16,7 +18,7 @@ class ExercisesPage extends StatelessWidget {
         elevation: 0,
         actions: <Widget>[
           IconButton(
-            onPressed: () => showAddExerciseWindow(context),
+            onPressed: () => _showAddExerciseWindow(context),
             icon: const Icon(Icons.add),
           )
         ],
@@ -25,6 +27,8 @@ class ExercisesPage extends StatelessWidget {
     );
   }
 
+  /// Creates a list of both default exercises and custom exercises that is
+  /// displayed on the exercises page.
   Widget _buildExercisesList() {
     return StreamBuilder<List<Map<String, dynamic>>>(
       stream: _exercisesService.getCombinedExercises(),
@@ -55,6 +59,7 @@ class ExercisesPage extends StatelessWidget {
                         'Muscle Group: ${item['muscleGroup']}\nIntensity Technique: ${item['intensityTechnique']}',
                         style: const TextStyle(color: Colors.grey),
                       ),
+                onLongPress: () => _exercisesService.deleteExercise(item),
               );
             },
           );
@@ -64,7 +69,8 @@ class ExercisesPage extends StatelessWidget {
     );
   }
 
-  void showAddExerciseWindow(BuildContext context) {
+  /// Pops up a window allowing the user to input custom exercise information.
+  void _showAddExerciseWindow(BuildContext context) {
     TextEditingController nameController = TextEditingController();
     TextEditingController muscleGroupController = TextEditingController();
     TextEditingController intensityTechniqueController =
@@ -95,7 +101,8 @@ class ExercisesPage extends StatelessWidget {
                   controller: intensityTechniqueController,
                   maxLines: null,
                   decoration: const InputDecoration(
-                    hintText: 'Enter intensity technique\n(leave empty if there isn\'t one)',
+                    hintText:
+                        'Enter intensity technique\n(leave empty if there isn\'t one)',
                   ),
                 ),
               ],
@@ -103,12 +110,17 @@ class ExercisesPage extends StatelessWidget {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Save'),
-              onPressed: () {
-                _exercisesService.addExercise(nameController.text, muscleGroupController.text, intensityTechniqueController.text);
-                Navigator.of(context).pop();
-              }
-            ),
+                child: const Text('Save'),
+                onPressed: () {
+                  if (intensityTechniqueController.text == "") {
+                    intensityTechniqueController.text = "None";
+                  }
+                  _exercisesService.addExercise(
+                      nameController.text,
+                      muscleGroupController.text,
+                      intensityTechniqueController.text);
+                  Navigator.of(context).pop();
+                }),
             TextButton(
               child: const Text('Cancel'),
               onPressed: () => Navigator.of(context).pop(),
@@ -118,4 +130,6 @@ class ExercisesPage extends StatelessWidget {
       },
     );
   }
+
+  void _showOptionsWindow() {}
 }

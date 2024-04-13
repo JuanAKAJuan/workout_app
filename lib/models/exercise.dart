@@ -9,6 +9,8 @@ class Exercise {
     required this.intensityTechnique,
   });
 
+  /// Maps the member variables of Exercise to strings that will make it easier
+  /// to read in the database.
   Map<String, dynamic> toMap() {
     return {
       'name': name,

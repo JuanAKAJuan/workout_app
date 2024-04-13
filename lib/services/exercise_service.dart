@@ -7,6 +7,7 @@ class ExercisesService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  /// Creates a new exercise and adds it to the database.
   Future<void> addExercise(String name, muscleGroup, intensityTechnique) async {
     final String currentUserID = _auth.currentUser!.uid;
 
@@ -23,10 +24,26 @@ class ExercisesService {
         .add(newExercise.toMap());
   }
 
-  Stream<QuerySnapshot> getExercises() {
-    return _firestore.collection("Exercises").orderBy("name").snapshots();
+  /// Remove an exercise from firebase and from the list of exercises.
+  ///
+  /// [item] is the attributes of an exercise such as the name, muscle group, and
+  /// intensity technique.
+  Future<void> deleteExercise(Map<String, dynamic> item) async {
+    final String currentUserID = _auth.currentUser!.uid;
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(currentUserID)
+        .collection('exercises')
+        .where('name', isEqualTo: item['name'])
+        .limit(1)
+        .get();
+
+    DocumentSnapshot docSnapshot = querySnapshot.docs.first;
+    docSnapshot.reference.delete();
   }
 
+  /// Retrieves both the default and custom exercises, merges them, then sorts
+  /// them in alphabetical order based on their names.
   Stream<List<Map<String, dynamic>>> getCombinedExercises() {
     final String currentUserID = _auth.currentUser!.uid;
     Stream<List<DocumentSnapshot>> defaultExercises = _firestore
