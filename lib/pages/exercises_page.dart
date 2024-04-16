@@ -48,18 +48,23 @@ class ExercisesPage extends StatelessWidget {
               return ListTile(
                 title: Text(
                   item['name'],
-                  style: const TextStyle(fontWeight: FontWeight.w700),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                  ),
                 ),
                 subtitle: item['intensityTechnique'] == 'None'
                     ? Text(
                         'Muscle Group: ${item['muscleGroup']}',
-                        style: const TextStyle(color: Colors.grey),
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary),
                       )
                     : Text(
                         'Muscle Group: ${item['muscleGroup']}\nIntensity Technique: ${item['intensityTechnique']}',
-                        style: const TextStyle(color: Colors.grey),
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary),
                       ),
-                onLongPress: () => _exercisesService.deleteExercise(item),
+                onLongPress: () => _showDeleteExerciseWindow(context, item),
               );
             },
           );
@@ -80,27 +85,46 @@ class ExercisesPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Add New Exercise'),
+          title: const Text(
+            textAlign: TextAlign.center,
+            'Add New Exercise',
+          ),
+          titleTextStyle: TextStyle(
+            fontSize: 15,
+            color: Theme.of(context).colorScheme.inversePrimary,
+          ),
           actionsAlignment: MainAxisAlignment.center,
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 TextField(
                   controller: nameController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
+                    hintStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w400,
+                    ),
                     hintText: 'Enter exercise name',
                   ),
                 ),
                 TextField(
                   controller: muscleGroupController,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
+                    hintStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w400,
+                    ),
                     hintText: 'Enter muscle group',
                   ),
                 ),
                 TextField(
                   controller: intensityTechniqueController,
                   maxLines: null,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
+                    hintStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w400,
+                    ),
                     hintText:
                         'Enter intensity technique\n(leave empty if there isn\'t one)',
                   ),
@@ -131,5 +155,60 @@ class ExercisesPage extends StatelessWidget {
     );
   }
 
-  void _showOptionsWindow() {}
+  void _showDeleteExerciseWindow(
+      BuildContext context, Map<String, dynamic> item) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          insetPadding: EdgeInsets.zero,
+          titlePadding:
+              const EdgeInsets.only(left: 30, right: 30, top: 30, bottom: 20),
+          contentPadding: const EdgeInsets.only(bottom: 10),
+          title: Text(
+            textAlign: TextAlign.center,
+            "Delete \"${item['name']}\"?",
+          ),
+          titleTextStyle: TextStyle(
+            fontSize: 15,
+            color: Theme.of(context).colorScheme.inversePrimary,
+          ),
+          actionsAlignment: MainAxisAlignment.center,
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.redAccent),
+                  foregroundColor: MaterialStateProperty.all(
+                      Theme.of(context).colorScheme.inversePrimary),
+                  fixedSize: MaterialStateProperty.all(
+                    Size.fromWidth(200),
+                  ),
+                ),
+                child: const Text('Delete Exercise'),
+                onPressed: () {
+                  _exercisesService.deleteExercise(item);
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(
+                      Theme.of(context).colorScheme.background),
+                  foregroundColor: MaterialStateProperty.all(
+                      Theme.of(context).colorScheme.inversePrimary),
+                  fixedSize: MaterialStateProperty.all(
+                    Size.fromWidth(200),
+                  ),
+                ),
+                child: const Text('Cancel'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 }
