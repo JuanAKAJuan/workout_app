@@ -1,11 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_app/services/exercise_service.dart';
 
-class ExercisesPage extends StatelessWidget {
-  ExercisesPage({super.key});
+class ExercisesPage extends StatefulWidget {
+  const ExercisesPage({super.key});
 
+  @override
+  State<ExercisesPage> createState() => _ExercisesPageState();
+}
+
+class _ExercisesPageState extends State<ExercisesPage> {
   final ExercisesService _exercisesService = ExercisesService();
 
   @override
@@ -77,9 +80,30 @@ class ExercisesPage extends StatelessWidget {
   /// Pops up a window allowing the user to input custom exercise information.
   void _showAddExerciseWindow(BuildContext context) {
     TextEditingController nameController = TextEditingController();
-    TextEditingController muscleGroupController = TextEditingController();
-    TextEditingController intensityTechniqueController =
-        TextEditingController();
+    String? selectedMuscleGroup;
+    String? selectedIntensityTechnique;
+    final List<String> muscleGroups = [
+      "Chest",
+      "Back",
+      "Quads",
+      "Hamstrings",
+      "Abs",
+      "Traps",
+      "Triceps",
+      "Forearms",
+      "Calves",
+      "Front Delts",
+      "Glutes",
+      "Biceps",
+      "Side Delts",
+      "Rear Delts"
+    ];
+    final List<String> intensityTechniques = [
+      "Myoreps",
+      "Myorep Match",
+      "Drop sets",
+      "None"
+    ];
 
     showDialog(
       context: context,
@@ -90,7 +114,7 @@ class ExercisesPage extends StatelessWidget {
             'Add New Exercise',
           ),
           titleTextStyle: TextStyle(
-            fontSize: 15,
+            fontSize: 16,
             color: Theme.of(context).colorScheme.inversePrimary,
           ),
           actionsAlignment: MainAxisAlignment.center,
@@ -100,34 +124,75 @@ class ExercisesPage extends StatelessWidget {
                 TextField(
                   controller: nameController,
                   decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Theme.of(context).colorScheme.background,
+                    filled: true,
                     hintStyle: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w400,
                     ),
-                    hintText: 'Enter exercise name',
+                    hintText: 'Exercise name',
                   ),
                 ),
-                TextField(
-                  controller: muscleGroupController,
+                const SizedBox(height: 10),
+                DropdownButtonFormField<String>(
+                  isExpanded: true,
+                  value: selectedMuscleGroup,
                   decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Theme.of(context).colorScheme.background,
+                    filled: true,
                     hintStyle: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w400,
                     ),
-                    hintText: 'Enter muscle group',
+                    hintText: 'Muscle Group',
                   ),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontSize: 15,
+                  ),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedMuscleGroup = newValue;
+                    });
+                  },
+                  items: muscleGroups.map((String value) {
+                    return DropdownMenuItem(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
-                TextField(
-                  controller: intensityTechniqueController,
-                  maxLines: null,
+                const SizedBox(height: 10),
+                DropdownButtonFormField<String>(
+                  isExpanded: true,
+                  value: selectedIntensityTechnique,
                   decoration: InputDecoration(
+                    border: InputBorder.none,
+                    fillColor: Theme.of(context).colorScheme.background,
+                    filled: true,
                     hintStyle: TextStyle(
                       color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.w400,
                     ),
-                    hintText:
-                        'Enter intensity technique\n(leave empty if there isn\'t one)',
+                    hintText: 'Intensity Technique',
                   ),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.inversePrimary,
+                    fontSize: 15,
+                  ),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedIntensityTechnique = newValue;
+                    });
+                  },
+                  items: intensityTechniques.map((String value) {
+                    return DropdownMenuItem(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
               ],
             ),
@@ -136,13 +201,11 @@ class ExercisesPage extends StatelessWidget {
             TextButton(
                 child: const Text('Save'),
                 onPressed: () {
-                  if (intensityTechniqueController.text == "") {
-                    intensityTechniqueController.text = "None";
-                  }
                   _exercisesService.addExercise(
-                      nameController.text,
-                      muscleGroupController.text,
-                      intensityTechniqueController.text);
+                    nameController.text,
+                    selectedMuscleGroup,
+                    selectedIntensityTechnique,
+                  );
                   Navigator.of(context).pop();
                 }),
             TextButton(
@@ -170,7 +233,7 @@ class ExercisesPage extends StatelessWidget {
             "Delete \"${item['name']}\"?",
           ),
           titleTextStyle: TextStyle(
-            fontSize: 15,
+            fontSize: 16,
             color: Theme.of(context).colorScheme.inversePrimary,
           ),
           actionsAlignment: MainAxisAlignment.center,
@@ -183,7 +246,7 @@ class ExercisesPage extends StatelessWidget {
                   foregroundColor: MaterialStateProperty.all(
                       Theme.of(context).colorScheme.inversePrimary),
                   fixedSize: MaterialStateProperty.all(
-                    Size.fromWidth(200),
+                    const Size.fromWidth(200),
                   ),
                 ),
                 child: const Text('Delete Exercise'),
@@ -199,7 +262,7 @@ class ExercisesPage extends StatelessWidget {
                   foregroundColor: MaterialStateProperty.all(
                       Theme.of(context).colorScheme.inversePrimary),
                   fixedSize: MaterialStateProperty.all(
-                    Size.fromWidth(200),
+                    const Size.fromWidth(200),
                   ),
                 ),
                 child: const Text('Cancel'),

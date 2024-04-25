@@ -23,7 +23,7 @@ class _StartingPageState extends State<StartingPage> {
   final List _pages = [
     const HomePage(),
     const HistoryPage(),
-    ExercisesPage(),
+    const ExercisesPage(),
     const SettingsPage(),
   ];
 

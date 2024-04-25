@@ -12,7 +12,7 @@ class HistoryPage extends StatelessWidget {
         foregroundColor: Theme.of(context).colorScheme.inversePrimary,
         elevation: 0,
       ),
-      body: Center(
+      body: const Center(
         child: Text("History Page"),
       ),
     );
