@@ -5,18 +5,36 @@ import 'package:workout_app/models/workout.dart';
 
 class WorkoutData extends ChangeNotifier {
   List<Workout> workoutList = [
-    Workout(name: "Upper Body", exercises: [
-      ExerciseData(
-        exercise: Exercise(
-          name: "Squats",
-          muscleGroup: "Quads",
-          intensityTechnique: "None",
+    Workout(
+      name: "Upper Body",
+      exercises: [
+        ExerciseData(
+          exercise: Exercise(
+            name: "Barbell Bench Press",
+            muscleGroup: "Chest",
+            intensityTechnique: "None",
+          ),
+          sets: "4",
+          reps: "10",
+          weight: "135",
         ),
-        sets: "4",
-        reps: "10",
-        weight: "135",
-      ),
-    ])
+      ],
+    ),
+    Workout(
+      name: "Lower Body",
+      exercises: [
+        ExerciseData(
+          exercise: Exercise(
+            name: "Squats",
+            muscleGroup: "Quads",
+            intensityTechnique: "None",
+          ),
+          sets: "4",
+          reps: "5",
+          weight: "225",
+        ),
+      ],
+    ),
   ];
 
   List<Workout> getWorkoutList() {
@@ -52,7 +70,8 @@ class WorkoutData extends ChangeNotifier {
   }
 
   void checkOffExerciseData(String workoutName, String exerciseName) {
-    ExerciseData relevantExercise = getRelevantExerciseData(workoutName, exerciseName);
+    ExerciseData relevantExercise =
+        getRelevantExerciseData(workoutName, exerciseName);
 
     relevantExercise.isCompleted = !relevantExercise.isCompleted;
 
@@ -66,10 +85,12 @@ class WorkoutData extends ChangeNotifier {
     return relevantWorkout;
   }
 
-  ExerciseData getRelevantExerciseData(String workoutName, String exerciseName) {
+  ExerciseData getRelevantExerciseData(
+      String workoutName, String exerciseName) {
     Workout relevantWorkout = getRelevantWorkout(workoutName);
 
-    ExerciseData relevantExerciseData = relevantWorkout.exercises.firstWhere((exercise) => exercise.exercise.name == exerciseName);
+    ExerciseData relevantExerciseData = relevantWorkout.exercises
+        .firstWhere((exercise) => exercise.exercise.name == exerciseName);
 
     return relevantExerciseData;
   }
