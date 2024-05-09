@@ -1,18 +1,18 @@
-import 'package:workout_app/models/exercise_data.dart';
+import 'package:workout_app/data/exercise_data.dart';
 
 class Workout {
   String name;
-  List<ExerciseData> exerciseSets;
+  List<ExerciseData> exercises;
 
   Workout({
-    required this.exerciseSets,
     required this.name,
+    required this.exercises,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'exerciseSets': exerciseSets,
+      'exercises': exercises,
     };
   }
 }

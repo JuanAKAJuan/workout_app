@@ -3,6 +3,7 @@ import 'package:workout_app/pages/exercises_page.dart';
 import 'package:workout_app/pages/history_page.dart';
 import 'package:workout_app/pages/home_page.dart';
 import 'package:workout_app/pages/settings_page.dart';
+import 'package:workout_app/pages/workout_page.dart';
 
 class StartingPage extends StatefulWidget {
   const StartingPage({super.key});
@@ -23,6 +24,7 @@ class _StartingPageState extends State<StartingPage> {
   final List _pages = [
     const HomePage(),
     const HistoryPage(),
+    const WorkoutPage(),
     const ExercisesPage(),
     const SettingsPage(),
   ];
@@ -40,6 +42,10 @@ class _StartingPageState extends State<StartingPage> {
           NavigationDestination(
             icon: Icon(Icons.history),
             label: 'History',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.add_box_rounded),
+            label: 'Workout',
           ),
           NavigationDestination(
             icon: Icon(Icons.fitness_center),
