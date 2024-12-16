@@ -1,4 +1,4 @@
-# 1 Ton
+# Workout App
 
 ### Todo List:
 1. Plate calculator
